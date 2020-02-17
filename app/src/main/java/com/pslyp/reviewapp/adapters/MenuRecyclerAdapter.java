@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pslyp.reviewapp.R;
 import com.pslyp.reviewapp.models.Menu;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
     private Context mContext;
     private List<Menu> mMenuLIst;
 
-    private boolean touch;
+    private final String BASE_IMAGE_URL = "http://pilot.cp.su.ac.th/usr/u07580536/yhinyhang/images/menu/";
 
     public MenuRecyclerAdapter(Context context, List<Menu> menuList) {
         this.mContext = context;
@@ -39,6 +41,8 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Menu menu = mMenuLIst.get(position);
+
+        Picasso.get().load(BASE_IMAGE_URL.concat(menu.getImage())).into(holder.image);
 
         holder.nameText.setText(menu.getName());
 
@@ -61,12 +65,14 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        public ImageView image;
         public TextView nameText;
         public ToggleButton favoriteToggle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            image = itemView.findViewById(R.id.background_image_view);
             nameText = itemView.findViewById(R.id.name_text_view);
             favoriteToggle = itemView.findViewById(R.id.favorite_toggle);
         }
